@@ -32,10 +32,12 @@
 собрать эти сообщения в исходном виде:
 
 - Пишем свой бекенд, который будет принимать http/grpc запросы или слушать кафку или ... (правильно, но сложно)
-- Используем готовый [fileexporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/fileexporter):
-  - в демо-проекте переходим в папку `src/otelcollector`;
-  - открываем файл `otelcol-config-extras.yml`;
-  - переопределяем экспортер и вновь исполняем `make run`.
+- Используем
+  готовый [fileexporter](https://github.com/open-telemetry/opentelemetry-collector-contrib/tree/main/exporter/fileexporter):
+    - в демо-проекте переходим в папку `src/otelcollector`;
+    - создаем файл, куда будут писаться логи/спаны, например, `exported-data.json`;
+    - открываем файл `otelcol-config-extras.yml`;
+    - переопределяем экспортер:
 
 ```yaml
 exporters:
@@ -52,3 +54,9 @@ service:
     logs:
       exporters: [ file/rotation_with_default_settings, debug ]
 ```
+
+- Предоследний, но не менее важный шаг, – надо подмаунтить файл в контейнер, для этого:
+    - открываем знакомый `docker-compose.yml` в корне проекта;
+    - находим сервис, отвечающий за OpenTelemetry коллектор, `otelcol`;
+    - добавляем новый `volume` в список `./src/otelcollector/exported-data.json:/etc/exported-data.json`.
+- Исполняем `make run`.
