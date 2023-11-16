@@ -1,6 +1,15 @@
 import re
 from typing import Callable, Iterable
-from pyparsing import infixNotation, opAssoc, Keyword, Word, QuotedString, alphas, alphanums, ParserElement
+from pyparsing import (
+    infixNotation,
+    opAssoc,
+    Keyword,
+    Word,
+    QuotedString,
+    alphas,
+    alphanums,
+    ParserElement,
+)
 
 ParserElement.enablePackrat()
 
@@ -27,7 +36,7 @@ class StringFullMatch:
         return self.field in x and x[self.field] == self.value
 
     def __str__(self) -> str:
-        return f"{self.field}=\"{self.value}\""
+        return f'{self.field}="{self.value}"'
 
     __repr__ = __str__
 
@@ -41,7 +50,7 @@ class StringWildMatch:
         return self.field in x and re.fullmatch(self.value, x[self.field]) is not None
 
     def __str__(self) -> str:
-        return f"{self.field}~\"{self.value}\""
+        return f'{self.field}~"{self.value}"'
 
     __repr__ = __str__
 
@@ -86,11 +95,15 @@ class BoolOr(BoolBinOp):
     eval_fn = any
 
 
-field_name = Word(alphas + '_', alphanums + '_').set_name("identifier")
-
+field_name = Word(alphas + "_", alphanums + "_").set_name("identifier")
 field_match = field_name.copy().set_parse_action(FieldMatch)
-full_match = (field_name + '=' + (Word(alphanums + '_') | QuotedString('"'))).set_parse_action(StringFullMatch)
-wild_match = (field_name + '~' + (Word(alphanums + '_.^$*?+[-]|{}') | QuotedString('"'))).set_parse_action(StringWildMatch)
+full_match = (
+    field_name + "=" + (Word(alphanums + "_") | QuotedString('"'))
+).set_parse_action(StringFullMatch)
+
+wild_match = (
+    field_name + "~" + (Word(alphanums + "_.^$*?+[-]|{}") | QuotedString('"'))
+).set_parse_action(StringWildMatch)
 
 NOT = Keyword("not")
 AND = Keyword("and")
@@ -109,12 +122,14 @@ bool_expr = infixNotation(
 
 
 if __name__ == "__main__":
-    sample = {'a':'1','b':'2','c':'3'}
+    sample = {"a": "1", "b": "2", "c": "3"}
 
-    assert bool_expr.parseString('a=1')[0].does_match(sample)
-    assert not bool_expr.parseString('a=12')[0].does_match(sample)
+    assert bool_expr.parseString("a=1")[0].does_match(sample)
+    assert not bool_expr.parseString("a=12")[0].does_match(sample)
     assert bool_expr.parseString('a~1 and b="2"')[0].does_match(sample)
-    assert bool_expr.parseString('a=2 or b=2')[0].does_match(sample)
-    assert bool_expr.parseString('a="2" or (a = 1 and c~[0-9] or d=4 and e=4))')[0].does_match(sample)
-    
+    assert bool_expr.parseString("a=2 or b=2")[0].does_match(sample)
+    assert bool_expr.parseString(
+        'a="2" or (a = 1 and c~[0-9] or d=4 and e=4))'
+    )[0].does_match(sample)
+
     print("query PASSED")
