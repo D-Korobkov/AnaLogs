@@ -10,7 +10,7 @@ def time_from_ns(ns: int) -> str:
 
 class Log:
     def __init__(
-        self, id: str, span_id: str, trace_id: str, timestamp: int, data: dict
+        self, id: int, span_id: int, trace_id: int, timestamp: int, data: dict
     ):
         self.id = id
         self.span_id = span_id
@@ -92,7 +92,7 @@ class Trace:
         self.id = trace_id
         self.start_at = start_at
         self.spans_order = []
-        self.spans: "Dict[str, Span]" = {}
+        self.spans: "Dict[int, Span]" = {}
         self.hash = None
 
     def compute_hash(self, ordered=False) -> None:
@@ -118,10 +118,10 @@ class DotFormatter:
     def __init__(self, filter: "bool_expr"):
         self.filter = filter
         self.traces_order = []
-        self.traces: "Dict[str, Trace]" = {}
+        self.traces: "Dict[int, Trace]" = {}
         self.log_id = 0
 
-    def add_trace(self, trace_id: str, start_at: int) -> "Trace":
+    def add_trace(self, trace_id: int, start_at: int) -> "Trace":
         if trace_id in self.traces:
             trace = self.traces[trace_id]
             trace.start_at = min(start_at, trace.start_at)
@@ -133,12 +133,12 @@ class DotFormatter:
 
     def add_span(
         self,
-        span_id,
-        trace_id: str,
+        span_id: int,
+        trace_id: int,
         name: str,
         start_at: int,
         end_at: int,
-        parent_id: "Optional[str]" = None,
+        parent_id: "Optional[int]" = None,
         update_on_conflict=False,
     ) -> "Span":
         trace = self.add_trace(trace_id, start_at)
@@ -162,7 +162,7 @@ class DotFormatter:
 
         return span
 
-    def set_span_parent(self, span: "Span", parent_id: str) -> None:
+    def set_span_parent(self, span: "Span", parent_id: int) -> None:
         assert span.parent is None
         parent = self.add_span(
             parent_id,
@@ -177,9 +177,9 @@ class DotFormatter:
         parent.children += [span]
 
     def add_log(
-        self, span_id: str, trace_id: str, timestamp: int, kwargs: dict
+        self, span_id: int, trace_id: int, timestamp: int, kwargs: dict
     ) -> "Optional[Log]":
-        log = Log(str(self.log_id), span_id, trace_id, timestamp, kwargs)
+        log = Log(self.log_id, span_id, trace_id, timestamp, kwargs)
 
         if not self.filter.does_match(log.build_meta()):
             return None
@@ -203,7 +203,7 @@ class DotFormatter:
         for trace in self.traces.values():
             trace.compute_hash(ordered)
 
-    def get_traces_order(self, grouped=False) -> "List[str]":
+    def get_traces_order(self, grouped=False) -> "List[int]":
         if grouped:
             return [trace.id for trace in list(set(self.traces.values()))]
 
@@ -239,7 +239,7 @@ class DotFormatter:
         return res
 
     @staticmethod
-    def get_spans_order(trace: "Trace", grouped=False) -> "List[str]":
+    def get_spans_order(trace: "Trace", grouped=False) -> "List[int]":
         if grouped:
             return [span.id for span in list(set(trace.spans.values()))]
 
@@ -255,7 +255,7 @@ class DotFormatter:
             res += f'{n.id} [label="{str(n)}"];\n'
 
         if len(span.nodes) > 1:
-            res += " -> ".join([n.id for n in span.nodes]) + ";\n"
+            res += " -> ".join([str(n.id) for n in span.nodes]) + ";\n"
 
         for c in span.children:
             res += DotFormatter.vis_span(c)
