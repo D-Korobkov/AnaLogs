@@ -1,5 +1,6 @@
 from collections import defaultdict
 from dataclasses import dataclass
+from io import StringIO
 from typing import Optional
 
 import google.protobuf.json_format as json_format
@@ -57,10 +58,9 @@ def any_value_to_str(any_val: common_pb2.AnyValue) -> str:
 
 
 def format_dot(traces: list[Trace]) -> str:
-    from io import StringIO
     dot_notation = StringIO()
-
     dot_notation.write("digraph G {")
+
     for t_idx, trace in enumerate(traces):
         # dot_notation.write(f'ts_{t_idx} [label="{datetime.fromtimestamp(trace.start_at_unix / 1_000_000_000)}"];')
         dot_notation.write(f"subgraph cluster_{t_idx} {{")
