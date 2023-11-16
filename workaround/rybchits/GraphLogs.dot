@@ -1,0 +1,49 @@
+// A Logs Graph
+digraph {
+	rankdir=TB
+	{
+		node1 [label="2023-09-22 15:37:04.084000
+info_log
+ Init with environment: Environment(value: test)" shape=rectangle]
+	}
+	node1 -> node2 [color=red constraint=false]
+	{
+		node2 [label="2023-09-22 15:37:04.084000
+info_log
+ Dependencies initializing..." shape=rectangle]
+		node3 [label="2023-09-22 15:37:04.086000
+debug_log
+ ProxyControllerBuilder[0m"]
+		node2 -> node3
+	}
+	node2 -> node4 [color=red constraint=false]
+	{
+		node4 [label="2023-09-22 15:37:04.086000
+info_log
+ Environment in host: EnvType.testing" shape=rectangle]
+	}
+	node4 -> node5 [color=red constraint=false]
+	{
+		node5 [label="2023-09-22 15:37:04.086000
+info_log
+ ProxyController initialization: experiment=false, assets/bypass/proxy_data_testing=assets/bypass/proxy_data_testing" shape=rectangle]
+		node6 [label="2023-09-22 15:37:04.087000
+debug_log
+ ProxyBuilder[0m"]
+		node5 -> node6
+	}
+	node5 -> node7 [color=red constraint=false]
+	{
+		node7 [label="2023-09-22 15:37:04.092000
+info_log
+ Proxy enabled" shape=rectangle]
+		node8 [label="2023-09-22 15:37:04.092000
+debug_log
+ MetricaBuilder[0m"]
+		node7 -> node8
+		node9 [label="2023-09-22 15:37:04.092000
+debug_log
+ ProtectorBuilder[0m"]
+		node8 -> node9
+	}
+}

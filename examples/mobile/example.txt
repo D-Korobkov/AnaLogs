@@ -1,0 +1,26 @@
+Showing Redmi Note 8 Pro logs:
+I/flutter ( 8552): The Dart VM service is listening on http://127.0.0.1:39757/hX53Lyt3fbk=/
+I/flutter ( 8552): Enabled, available devices : [ android_phone_w180,android_phone_w240,android_phone_w280,android_phone_w320,android_phone_w360p2,android_phone_w360p3,android_phone_w375,android_phone_w390,android_phone_w400,android_phone_w414,android_phone_w428,android_phone_w480,android_phone_w533,android_phone_w540,android_phone_w600,android_tablet_w600,android_tablet_w720,android_tablet_w800,android_tablet_w1080,ios_phone_iphone-12-mini,ios_phone_iphone-12,ios_phone_iphone-12-pro-max,ios_phone_iphone-13-mini,ios_phone_iphone-13,ios_phone_iphone-13-pro-max,ios_phone_iphone-14-pro,ios_phone_iphone-se,ios_tablet_ipad-air-4,ios_tablet_ipad-pro-11inches,android_phone_samsung-galaxy-a50,android_phone_samsung-galaxy-s20,android_phone_samsung-galaxy-note20-ultra,android_phone_oneplus-8-pro ]
+W/FlutterWebRTCPlugin( 8552): audioFocusChangeListener [Earpiece(name=Earpiece)] Earpiece(name=Earpiece)
+W/FlutterWebRTCPlugin( 8552): audioFocusChangeListener [Speakerphone(name=Speakerphone), Earpiece(name=Earpiece)] Speakerphone(name=Speakerphone)
+I/flutter ( 8552): [33m22.09.2023-15:37:04:067 | WARNING 🟡 | Logger enabled[0m
+I/flutter ( 8552): [0m22.09.2023-15:37:04:067 | INFO  | APP        | Init       | Preconfigure dependencies
+I/flutter ( 8552): [0m22.09.2023-15:37:04:068 | INFO  | APP        | Init       | ErrorHandler initialized
+I/flutter ( 8552): [0m22.09.2023-15:37:04:080 | INFO  | APP        | Init       | Configure flavor dependencies
+I/flutter ( 8552): [0m22.09.2023-15:37:04:080 | INFO  | APP        | Init       | Configure dependencies
+I/flutter ( 8552): [38;5;242m22.09.2023-15:37:04:084 | DEBUG | APP      | EnvironmentController | dartDefineEnvironment: Environment(value: test)[0m
+I/flutter ( 8552): [0m22.09.2023-15:37:04:084 | INFO  | APP      | EnvironmentController | Init with environment: Environment(value: test)
+I/flutter ( 8552): [0m22.09.2023-15:37:04:084 | INFO  | APP        | Init       | Dependencies initializing...
+I/flutter ( 8552): [38;5;242m22.09.2023-15:37:04:086 | DEBUG | APP        | ProxyControllerBuilder[0m
+I/flutter ( 8552): [0m22.09.2023-15:37:04:086 | INFO  | APP        | Environment in host: EnvType.testing
+I/flutter ( 8552): [0m22.09.2023-15:37:04:086 | INFO  | APP        | ProxyController initialization: experiment=false, assets/bypass/proxy_data_testing=assets/bypass/proxy_data_testing
+I/flutter ( 8552): [38;5;242m22.09.2023-15:37:04:087 | DEBUG | APP        | ProxyBuilder[0m
+I/flutter ( 8552): [0m22.09.2023-15:37:04:092 | INFO  | APP        | Init, Proxy | Proxy enabled
+I/flutter ( 8552): [38;5;242m22.09.2023-15:37:04:092 | DEBUG | APP        | MetricaBuilder[0m
+I/flutter ( 8552): [38;5;242m22.09.2023-15:37:04:092 | DEBUG | APP        | ProtectorBuilder[0m
+I/flutter ( 8552): [38;5;242m22.09.2023-15:37:04:093 | DEBUG | APP        | ExecutorBuilder[0m
+I/flutter ( 8552): [38;5;242m22.09.2023-15:37:04:134 | DEBUG | APP      | FrameMetricsPulse | onFirstFrame[0m
+I/flutter ( 8552): [38;5;242m22.09.2023-15:37:04:134 | DEBUG | APP      | FrameMetricsPulse | startMeasurement Render.Startup.30sec[0m
+I/flutter ( 8552): [38;5;242m22.09.2023-15:37:04:222 | DEBUG | APP        | pulse_config | read variations = {android_perf_class: 0, perf_class: rocket}[0m
+I/flutter ( 8552): [38;5;242m22.09.2023-15:37:04:277 | DEBUG | APP        | AppInfoProvider, UserAgentManager | create app info; X-User-Agent-Split[0m
+I/flutter ( 8552): [0m22.09.2023-15:37:04:277 | INFO  | APP        | Environment in host: EnvType.testing
