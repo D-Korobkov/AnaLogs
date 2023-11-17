@@ -5,6 +5,10 @@ from dataclasses import dataclass
 from textwrap import dedent
 from typing import Optional
 
+import opentelemetry.analyzer as otel_analyzer
+import mobile.analyzer as mobile_analyzer
+from querylang.query_expr import bool_expr
+
 
 class LogSource(enum.Enum):
     OTEL = "open-telemetry"
@@ -17,6 +21,7 @@ class ProgArguments:
     log_source: str
     query: Optional[str]
     output_file: pathlib.Path
+    schema_path: Optional[str]
 
 
 def parse_arguments():
@@ -65,10 +70,26 @@ def parse_arguments():
         help="Path to output file",
     )
 
+    parser.add_argument(
+        "--schema",
+        dest="schema_path",
+        type=str,
+        required=False,
+        help="Schema for unstructured logs",
+    )
+
     args = parser.parse_args()
     return ProgArguments(**args.__dict__)
 
 
 if __name__ == "__main__":
     prog_args = parse_arguments()
-    print(prog_args)
+
+    events_filter = None
+    if prog_args.query is not None:
+        events_filter = bool_expr.parseString(prog_args.query)[0]
+
+    if prog_args.log_source == LogSource.OTEL.value:
+        otel_analyzer.analyze_spans_with_logs(prog_args.input_file, prog_args.output_file, events_filter)
+    elif prog_args.log_source == LogSource.ANDROID.value:
+        mobile_analyzer.analyze_logs(prog_args.input_file, prog_args.output_file, prog_args.schema_path)
